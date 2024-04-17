@@ -58,7 +58,7 @@ class TextEditorInterface extends ITextEditor {
   setSelectionRange(range) {
     this.doc.setSelection(
       { line: range.start.row, ch: range.start.column },
-      { line: range.end.row, ch: range.end.column }
+      { line: range.end.row, ch: range.end.column },
     );
   }
 
@@ -81,13 +81,13 @@ class TextEditorInterface extends ITextEditor {
       this.doc.replaceRange(
         "\n" + line,
         { line: lastRow, ch: lastLine.length },
-        { line: lastRow, ch: lastLine.length }
+        { line: lastRow, ch: lastLine.length },
       );
     } else {
       this.doc.replaceRange(
         line + "\n",
         { line: row, ch: 0 },
-        { line: row, ch: 0 }
+        { line: row, ch: 0 },
       );
     }
   }
@@ -101,14 +101,14 @@ class TextEditorInterface extends ITextEditor {
         this.doc.replaceRange(
           "",
           { line: lastRow - 1, ch: preLastLine.length },
-          { line: lastRow, ch: lastLine.length }
+          { line: lastRow, ch: lastLine.length },
         );
       } else {
         const lastLine = this.getLine(lastRow);
         this.doc.replaceRange(
           "",
           { line: lastRow, ch: 0 },
-          { line: lastRow, ch: lastLine.length }
+          { line: lastRow, ch: lastLine.length },
         );
       }
     } else {
@@ -123,13 +123,13 @@ class TextEditorInterface extends ITextEditor {
       this.doc.replaceRange(
         lines.join("\n"),
         { line: startRow, ch: 0 },
-        { line: lastRow, ch: lastLine.length }
+        { line: lastRow, ch: lastLine.length },
       );
     } else {
       this.doc.replaceRange(
         lines.join("\n") + "\n",
         { line: startRow, ch: 0 },
-        { line: endRow, ch: 0 }
+        { line: endRow, ch: 0 },
       );
     }
   }
@@ -152,7 +152,7 @@ const encode = (text) => {
     .map((c) =>
       Array.from(c)
         .map((b) => (b === "1" ? "‍" : "‌"))
-        .join("")
+        .join(""),
     )
     .join("​");
   return encoded;
@@ -164,7 +164,7 @@ const decode = (encoded) => {
   const binary = split.map((c) =>
     Array.from(c)
       .map((z) => (z === "‍" ? "1" : "0"))
-      .join("")
+      .join(""),
   );
   const decoded = binary
     .map((b) => String.fromCodePoint(parseInt(b, 2)))
@@ -193,6 +193,9 @@ export const useEditorStore = defineStore("editor", {
 
       // @ts-ignore
       CodeMirror.Vim.defineEx("help", "h", this.help);
+
+      // @ts-ignore
+      CodeMirror.Vim.map("jf", "<Esc>", "insert");
 
       const cm = CodeMirror.fromTextArea(editor as HTMLTextAreaElement, {
         mode: "markdown",
@@ -435,7 +438,7 @@ export const useEditorStore = defineStore("editor", {
           const value = this.cm.getValue();
 
           const splited = value.split(
-            /^> \(\(([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\)\)([\u200b-\u200f\uFEFF\u202a-\u202e]+):\n/gim
+            /^> \(\(([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\)\)([\u200b-\u200f\uFEFF\u202a-\u202e]+):\n/gim,
           );
 
           for (let i = 1; i < splited.length; i += 3) {

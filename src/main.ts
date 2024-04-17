@@ -30,7 +30,7 @@ const initSettings = () => {
 
 const getSettings = (
   key: string | undefined,
-  defaultValue: any = undefined
+  defaultValue: any = undefined,
 ) => {
   const settings = logseq.settings;
   const merged = Object.assign(defaultSettings, settings);
@@ -89,7 +89,7 @@ function main() {
         binding: keyBindings.openVimEditor,
       },
     },
-    handleTriggerModal
+    handleTriggerModal,
   );
 }
 
